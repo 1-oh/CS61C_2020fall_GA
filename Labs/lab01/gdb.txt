@@ -1,0 +1,9 @@
+1.(gdb) set args input.txt --verbose
+2.(gdb) break <filename>:<row index>
+3.(gdb)next
+4.(gdb)step
+5.(gdb)continue
+6.print <expression> or p <expression>
+7.display <expression>
+8.info locals
+9.quit
