@@ -17,7 +17,7 @@ Labs:
 - [ ] lab12
 
 Projects:
-- [ ] project1
+- [x] project1
 - [ ] project2
 - [ ] project3
 - [ ] project4
