@@ -66,20 +66,27 @@ map:
     # are modified by the callees, even when we know the content inside the functions 
     # we call. this is to enforce the abstraction barrier of calling convention.
 mapLoop:
-    add t1, s0, x0      # load the address of the array of current node into t1
+    #Bug4 : the address of the array is *s0, not s0
+    lw t1, 0(s0)        # load the address of the array of current node into t1
     lw t2, 4(s0)        # load the size of the node's array into t2
+    
+    #Bug1 : t0 is a counter(each time plus 1), but the number occupies 4 byte
+    slli t3, t0, 2      # t3 = t0 * 4
 
-    add t1, t1, t0      # offset the array address by the count
-    lw a0, 0(t1)        # load the value at that address into a0
+    add t4, t1, t3      # offset the array address by the count
+    lw a0, 0(t4)        # load the value at that address into a0
 
     jalr s1             # call the function on that value.
-
-    sw a0, 0(t1)        # store the returned value back into the array
+    
+    #Bug 5 : we need to store *t4, not *t1
+    sw a0, 0(t4)        # store the returned value back into the array
     addi t0, t0, 1      # increment the count
     bne t0, t2, mapLoop # repeat if we haven't reached the array size yet
-
-    la a0, 8(s0)        # load the address of the next node into a0
-    lw a1, 0(s1)        # put the address of the function back into a1 to prepare for the recursion
+    
+    #Bug2 : we don't want to put the value "s0 + 8" into a0, but the thing that it points to.
+    lw a0, 8(s0)        # load the address of the next node into a0
+    #Bug3 : we want to store s1 into a1, not something that s1 points to.
+    mv a1, s1        # put the address of the function back into a1 to prepare for the recursion
 
     jal  map            # recurse
 done:
