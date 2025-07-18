@@ -58,7 +58,7 @@ int move(int numRow, int numCol, int posRow, int posCol, int direction){
 }
 
 void bitCountUpdate(int *bitCount, Image* image, int row, int col){
-	//0-7:RED,8-15:GREEN,16-23:RED(each from low bit to high bit)
+	//0-7:RED,8-15:GREEN,16-23:BLUE(each from low bit to high bit)
 	Color* colorP = image -> image[col + row * (image -> cols)];
 	//Update the bitCount of the RED
 	int denominator = 1;
@@ -95,7 +95,7 @@ Color *evaluateOneCell(Image *image, int row, int col, uint32_t rule)
     Color *oldColor = image -> image[col + row * image -> cols];
 	Color *ret = (Color*)malloc(sizeof(Color));
 
-	int bitCount[24]; //0-7:RED,8-15:GREEN,16-23:RED(each from low bit to high bit)
+	int bitCount[24]; //0-7:RED,8-15:GREEN,16-23:BLUE(each from low bit to high bit)
 	int upRow = move(image -> rows, image -> cols, row, col, 0);
 	int downRow = move(image -> rows, image -> cols, row, col, 1);
 	int leftCol = move(image -> rows, image -> cols, row, col, 2);
