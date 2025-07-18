@@ -77,7 +77,27 @@ main:
 # Think: why might having a1 be useful?
 f:
     # YOUR CODE GOES HERE!
+    addi sp, sp, -12
+    sw ra, 0(sp)
+    sw s0, 4(sp)
+    sw s1, 8(sp)
 
+    add s0, a0, x0
+    add s1, a1, x0
+    
+    # t0 is the index of the element in the array
+    addi t0, s0, 3
+    # t1 is the offset
+    slli t1, t0, 2
+    # t2 points to the element
+    add t2, s1, t1
+
+    lw a0, 0(t2)   
+
+    lw ra, 0(sp)
+    lw s0, 4(sp)
+    lw s1, 8(sp)
+    addi sp, sp, 12
     jr ra               # Always remember to jr ra after your function!
 
 print_int:
