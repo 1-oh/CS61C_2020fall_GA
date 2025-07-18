@@ -7,7 +7,7 @@ Labs:
 - [ ] lab02
 - [x] lab03
 - [x] lab04
-- [ ] lab05
+- [x] lab05
 - [ ] lab06
 - [ ] lab07
 - [ ] lab08
