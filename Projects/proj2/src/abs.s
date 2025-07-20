@@ -13,5 +13,6 @@ abs:
     bge a0, zero, done
     # invert a if negative
     sub a0, zero, a0
-    done:
+    # Epilogue
+done:
     ret
