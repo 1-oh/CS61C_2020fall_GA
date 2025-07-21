@@ -47,4 +47,4 @@ loop_end:
 	ret
 error_exit:
     li a1, 78
-    ecall
+    jal ra, exit2

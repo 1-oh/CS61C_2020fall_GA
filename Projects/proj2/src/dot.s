@@ -42,8 +42,10 @@ dot:
     li a0, 0     # initialize a0 (the sum) to be 0
 loop_start:
     bge t0, s2, loop_end
-    mul t1, t0, s3  # t1 is the address offset of vector1
-    mul t2, t0, s4  # t2 is the address offset of vector2
+    mul t1, t0, s3  
+    mul t2, t0, s4  
+    slli t1, t1, 2  # t1 is the address offset of vector1
+    slli t2, t2, 2  # t2 is the address offset of vector2
     
     add t3, s0, t1  # t3 is the pointer to the element in vector1
     add t4, s1, t2  # t4 is the pointer to the element in vector2
@@ -72,9 +74,7 @@ loop_end:
 
 error_exit1:
     li a1, 75
-    li a7, 93        # syscall for exit
-    ecall
+    jal ra, exit2
 error_exit2:
     li a1, 76
-    li a7, 93        # syscall for exit
-    ecall
+    jal ra, exit2

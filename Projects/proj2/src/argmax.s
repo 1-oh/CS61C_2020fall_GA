@@ -50,6 +50,7 @@ loop_continue:
     mv t2, t5
     skip_upgrade:
     addi t0, t0, 1
+    j loop_start
 loop_end:
     mv a0, t1
 
@@ -61,6 +62,5 @@ loop_end:
     ret
 
 error_exit:
-    li a0, 77
-    li a7, 93   # linux exit syscall
-    ecall
+    li a1, 77
+    jal ra, exit2
