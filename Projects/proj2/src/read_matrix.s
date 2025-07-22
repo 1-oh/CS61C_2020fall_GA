@@ -27,7 +27,7 @@
 read_matrix:
 
     # Prologue
-	addi sp, sp, -28
+	addi sp, sp, -32
     sw ra, 0(sp)     
     sw s0, 4(sp)     # filename
     sw s1, 8(sp)     # pointer to num of rows
@@ -35,6 +35,7 @@ read_matrix:
     sw s3, 16(sp)    # s3 is the file desciptor
     sw s4, 20(sp)    # s4 is the pointer to the matrix
     sw s5, 24(sp)    # s5 is the size of memory we need to malloc
+    sw s6, 28(sp)    # s6 is the size of memory that already read in reading matrix
 
     mv s0, a0
     mv s1, a1
@@ -78,11 +79,24 @@ read_matrix:
     mv s4, a0
     
     # read the matrix
+    # s4 is the pointer to the first element of the matrix
+    # s5 is the size that we need to read, we read 4 byte each time
+    # s6 is the size of memory that already read in reading matrix
+    li s6, 0
+    read_matrix_loop_start:
+    bge s6, s5, read_matrix_loop_end
+    
+    add t0, s6, s4  # t0 = s6 + s4, which is the pointer to the current element
     mv a1, s3
-    mv a2, s4
-    mv a3, s5   # t2 is the size that we need to read
+    mv a2, t0
+    li a3, 4
     jal ra, fread
-    bne s5, a0, read_error
+
+    li t0, 4
+    bne a0, t0, read_error
+    addi s6, s6, 4
+    j read_matrix_loop_start
+    read_matrix_loop_end:
     
     # close the file
     mv a1, s3   # file descriptor
@@ -99,7 +113,8 @@ read_matrix:
     lw s3, 16(sp)
     lw s4, 20(sp)
     lw s5, 24(sp)
-    addi sp, sp, 28
+    lw s6, 28(sp)
+    addi sp, sp, 32
     ret
 
 malloc_error:
