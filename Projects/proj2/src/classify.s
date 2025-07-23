@@ -222,8 +222,6 @@ classify:
     jal free
     mv a0, s10
     jal free
-    mv a0, s11
-    jal free
     
     mv a0, s3
 
