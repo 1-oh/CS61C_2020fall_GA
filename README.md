@@ -17,7 +17,7 @@ Labs:
 - [ ] lab12
 
 Projects:
-- [x] project1
-- [ ] project2
+- [x] project1 Conway's game of life
+- [x] project2 Neural Network number classification(in RISC-V)
 - [ ] project3
 - [ ] project4
